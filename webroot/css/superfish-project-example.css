@@ -1,0 +1,10 @@
+/**
+ * #menu is the menu wrapper
+ */
+#menu .sf-menu li:hover, #menu .sf-menu li.sfHover, #menu .sf-menu a:focus, #menu .sf-menu a:hover, #menu .sf-menu a:active{background: #F9AE00 none;}
+#menu .sf-menu a, #menu .sf-menu a:visited{color: #fff;}
+#menu .sf-menu li{background: #FFC342 none;}
+#menu .sf-menu li li{background: #FFC342 none;}
+#menu .sf-menu li li li{background: #FFC342 none;}
+/*navbar*/
+#menu .sf-navbar{background: #FFD582 none;}

@@ -14,8 +14,8 @@ It uses the nifty Superfish - jQuery menu plugin. You can find more info for it 
 http://users.tpg.com.au/j_birch/plugins/superfish/
 
 Cakemenu can work with multilevel menus and reduces the database calls by caching the
-menu nodes. The plugin working with Authake http://conseil-recherche-innovation.net/authake
-plugin if you need to apply filter to menu nodes (user need to see only allowed locations)
+menu nodes. The plugin working with the Authake plugin http://github.com/nchankov/authake 
+if you need to apply filter to menu nodes (user need to see only allowed locations)
 
 Cakemenu working with CakePHP 1.2 but it's tested with Cakephp 1.3 (RC3) and it would not have any
 problems with the future releases so far.

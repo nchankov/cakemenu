@@ -114,11 +114,7 @@ class CakemenuComponent extends Object {
      */
     private function _filter($nodes){
         if($this->auth != false){
-            if($this->auth->getUserId() > 0){ //Logged user
-               $nodes = $this->_checkAllowed($nodes);
-            } else { //not logged user
-               $nodes = array();
-            }
+            $nodes = $this->_checkAllowed($nodes);
         }
         return $nodes;
     }

@@ -29,7 +29,7 @@ class CakemenuController extends CakemenuAppController {
 	}
 	
 	function recover(){
-		$this->Menu->recover();
+		$this->Menu->recover($this->Menu);
 		$this->redirect(array('action'=>'index'));
 	}
 

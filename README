@@ -9,15 +9,15 @@ Adding dynamic menu functionality to any application.
 
 == 1. Description ==
 
-The plugin is complete solution to add menu in your applications.
+The plugin is a complete solution to add a menu in your applications.
 It uses the nifty Superfish - jQuery menu plugin. You can find more info for it at
 http://users.tpg.com.au/j_birch/plugins/superfish/
 
 Cakemenu can work with multilevel menus and reduces the database calls by caching the
-menu nodes. The plugin working with the Authake plugin http://github.com/nchankov/authake 
-if you need to apply filter to menu nodes (user need to see only allowed locations)
+menu nodes. The plugin is working with the Authake plugin http://github.com/nchankov/authake 
+if you need to apply a filter to menu nodes (user needs to see only allowed locations)
 
-Cakemenu working with CakePHP 1.2 but it's tested with Cakephp 1.3 (RC3) and it would not have any
+Cakemenu is working with CakePHP 1.2 but it's tested with Cakephp 1.3 (RC3) and it would not have any
 problems with the future releases so far.
 
 
@@ -28,27 +28,27 @@ CakePHP 1.2 (tested with 1.3)
 jQuery 1.4
 Authake (if needed)
 
-The plugin obviously require CakePHP. The plugin uses jQuery, but jQuery it's not included in the plugin.
-You need to load the jQuery in your layout. The plugin uses Authake to filter the elements depending from
-the user's priviledges, but it's not a requirement. If Auth component is not used the menu will be shown
+The plugin obviously requires CakePHP. The plugin uses jQuery, but jQuery is not included in the plugin.
+You need to load the jQuery in your layout. The plugin uses Authake to filter the elements depending on
+the user's privileges, but it's not a requirement. If Auth component is not used the menu will be shown
 without any restrictions.
 
 
 
 == 3. Installation ==
 1. Put the directory cakemenu into your /app/plugins directory
-2. import database dump from cakemenu/db folder (it contain empty cakemenu table schema).
+2. import database dump from cakemenu/db folder (it contains empty cakemenu table schema).
 
 
 
 == 4. Fetching the elements ==
 
-In your app_controler include 'Cakemenu.Cakemenu' component and helper.
+In your app_controler includes 'Cakemenu.Cakemenu' component and helper.
 
     var $helpers = array(..., 'Cakemenu.Cakemenu', ...);
     var $components = array(..., 'Cakemenu.Cakemenu', ...);
 
-in beforeFilter() function of app controller add
+in the beforeFilter() function of app controller add
 
     $this->set('menu', $this->Cakemenu->nodes());
 
@@ -61,70 +61,70 @@ function nodes($options = array(), &$auth=null, $cache='menu')
 
 1. options - almost identical to find() options parameter (see explanation below)
 2. auth - reference to Auth component (working with Authake), but it could be used with any Auth component (see details below)
-3. cache - if set to false no cache is provided. Defaults to 'menu', but it could be used to cache more than once intance of the menu. i.e. 3 sub menu nodes.
+3. cache - if set to false no cache is provided. Defaults to 'menu', but it could be used to cache more than once instance of the menu. i.e. 3 sub menu nodes.
 
 === Options parameter ===
-in the first parameter you can pass options the the Cake menu. For example it could be used to fetch only limited list of fields: 
+in the first parameter you can pass options to the Cake menu. For example it could be used to fetch only a limited list of fields: 
 
     $this->set('menu', $this->Cakemenu->nodes(array('fields'=>array('Menu.id', 'Menu.name'))));
 
 You can pass the same options which are applied to normal Model->find() function.
-If you need to fetch only sub tree you can do this by passing 'subtree' node in the options array. This will fetch the node with id=20 and all it's sub nodes.
+If you need to fetch only a sub tree you can do this by passing 'subtree' node in the options array. This will fetch the node with id=20 and all it's sub nodes.
 
     $this->set('menu', $this->Cakemenu->nodes(array('subtree'=>array('id'=>20))));
 
-If you need only the sub nodes of the specific element, it could be done with adding extra parameter to the opions array 'parent'. This will fetch the child nodes of the
+If you need only the sub nodes of the specific element, it could be done with adding an extra parameter to the options array 'parent'. This will fetch the child nodes of the
 element with id=20:
 
     $this->set('menu', $this->Cakemenu->nodes(array('subtree'=>array('id'=>20, 'parent'=>false))));
 
 === Auth parameter ===
-the second parameter accpet an instance of Auth class. By default Cakemenu uses Authake plugin, but it could use any Auth plugin which has these 2 functions:
+the second parameter accepts an instance of Auth class. By default Cakemenu uses Authake plugin, but it could use any Auth plugin which has these 2 functions:
 Auth->isAllowed($path) - return boolean true if the $path can be accessed from the user, or false if the path is not allowed.
 Auth->getUserId() - return integer id of the logged user.
 
 If Auth component is passed, every logged user will see only menus which are accessible to him. If it's cached the menu will have user ID identifier to the cache
-file, so each user will have it's own cached verion. Basically if you extend default Auth component of Cakephp you can add these functions easily.
+file, so each user will have it's own cached version. Basically if you extend default Auth component of Cakephp you can add these functions easily.
 
-Filtering follow these rules:
-1. If the node has link which is allowed - it will be included in the final array
-2. If the node has link which is not allowed
+Filtering follows these rules:
+1. If the node has a link which is allowed - it will be included in the final array
+2. If the node has a link which is not allowed
     2.1 If there are children which are allowed - leave the node, but remove the link from it
     2.2 if there are no children - remove the node
     
 === Cache parameter ===
 Cache parameter is responsible for the proper caching. Basically the plugin uses the default cache settings, so the cache time could
-be managed from ourside. The default value of the parameter is 'menu'. This way the menu is cached and the cache file is named cake_menu
-If there is auth component to the cache file is attached also the ID of the user. i.e. cake_menu_1, cake_menu_2 etc.
-if you set different name i.e. 'sub_menu' the cache will be stored in the cake_sub_menu or cake_sub_menu_1 (if Auth is used)
+be managed from our side. The default value of the parameter is 'menu'. This way the menu is cached and the cache file is named cake_menu
+If there is an auth component the ID of the user is also attached to the cache file (i.e. cake_menu_1, cake_menu_2 etc.)
+if you set a different name i.e. 'sub_menu' the cache will be stored in the cake_sub_menu or cake_sub_menu_1 (if Auth is used)
 
-This could be useful if you need to have 2 menu - one for main navigation and another one for sub navigation in sidebar. This way you can leave the main menu with
+This could be useful if you need to have 2 menus - one for main navigation and another one for sub navigation in the sidebar. This way you can leave the main menu with
 name 'menu', but the second menu could be cached under 'sub_menu' so you will cache properly the menus without conflicting them.
 
 
 
 == 6. Displaying the menu ==
 Once the menu nodes are fetched (see previous point) they need to be shown on the page.
-Normally menu is common element so it's obvious to place it on the layout. In you default layout add following rows in order to show the menu:
+Normally the menu is a common element so it's obvious to place it on the layout. In your default layout add the following rows in order to show the menu:
 
     <?php
         echo $this->Cakemenu->libs();
 	echo $this->Cakemenu->generate($menu);
     ?>
-The first row add the necessary javascript and css links while the second one generate the html of the menu from the nested array generated in 3.
-Note: Your jQuery lib need to be placed above these rows.
+The first row adds the necessary javascript and css links while the second one generates the html of the menu from the nested array generated in 3.
+Note: Your jQuery lib needs to be placed above these rows.
     
 == 5. Examples and tricks for Cakemenu Helper ==
 The menu can be displayed in 3 ways: horizontal, vertical and navbar (see Superfish examples http://users.tpg.com.au/j_birch/plugins/superfish/)
     
-you can change the way of displaying the menu by passing parameter to the libs()
+you can change the way of displaying the menu by passing a parameter to the libs()
     
     echo $this->Cakemenu->libs(); //will show horizontal menu (by default) or echo $this->Cakemenu->libs('horizontal');
     echo $this->Cakemenu->libs('vertical'); //will show vertical menu
     echo $this->Cakemenu->libs('navbar'); //will show navbar
     
 you can overwrite the default styles of the menu by adding the file in your /app/webroot/css file like the one in the
-/app/plugins/cakemenu/webroot/css/superfish-project-example.css The example file just changes the colors of the default Superfich menu,
+/app/plugins/cakemenu/webroot/css/superfish-project-example.css The example file just changes the colors of the default Superfish menu,
 but it's possible to be extended if needed.
 
 == 6. Administration of the plugin ==
@@ -134,13 +134,13 @@ http://your-server.com/cake-project/cakemenu/
 Note: restrict the access to this location, otherwise you risk to compromize the menu in your application.
 
 With the interface you can add/edit/delete menu nodes as well as reorder them and change the position in the tree.
-You can pass icon to each node by specifying full or relative path the the image icon.
+You can pass icon to each node by specifying a full or relative path to the image icon.
 
-For example http://your-server.com/cake-project/img/icon1.png or /cake-project/img/icon1.png can be used. The icon will appear infront of the node
+For example http://your-server.com/cake-project/img/icon1.png or /cake-project/img/icon1.png can be used. The icon will appear in front of the node
 
 The links could be provided in 2 ways as path:
 /controller/action or /routed-location
-or by providing the array string with normal cakephp ocnvention for example:
+or by providing the array string with normal cakephp convention for example:
 array('controller'=>'my_controller', 'action'=>'my_action', 'param')
 It's better if you use the first way, but the second way is possible as well.
 
